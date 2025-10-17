@@ -1,4 +1,4 @@
-module github.com/mongodb/ftdc
+module github.com/jodevsa/ftdc
 
 go 1.24
 
