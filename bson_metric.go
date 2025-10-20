@@ -17,6 +17,7 @@ func metricForDocument(path []string, d *birch.Document) []Metric {
 
 	for iter.Next() {
 		e := iter.Element()
+
 		o = append(o, metricForType(e.Key(), path, e.Value())...)
 	}
 
