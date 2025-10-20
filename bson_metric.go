@@ -17,7 +17,6 @@ func metricForDocument(path []string, d *birch.Document) []Metric {
 
 	for iter.Next() {
 		e := iter.Element()
-
 		o = append(o, metricForType(e.Key(), path, e.Value())...)
 	}
 
@@ -52,7 +51,11 @@ func metricForType(key string, path []string, val *birch.Value) []Metric {
 		return metricForArray(key, path, val.MutableArray())
 	case bsontype.EmbeddedDocument:
 		o := []Metric{}
-		for _, ne := range metricForDocument(append(path, key), val.MutableDocument()) {
+		newPath := make([]string, len(path))
+		copy(newPath, path)
+		newPath = append(newPath, key)
+
+		for _, ne := range metricForDocument(newPath, val.MutableDocument()) {
 			o = append(o, Metric{
 				ParentPath:    ne.ParentPath,
 				KeyName:       ne.KeyName,
